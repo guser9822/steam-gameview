@@ -1,11 +1,12 @@
 const axios = require('axios')
+const mySteamKey = require('./mySteamKey.js').mySteamKey
 
 const steamAPIUrl = 'http://api.steampowered.com/'
 const playerServiceAPI = '/IPlayerService'
 const getOwnedGamesEndPoint = '/GetOwnedGames'
 const version = '/v0001'
 const quesMark = '?'
-const keyQp = 'key='
+const keyQp = 'key='+mySteamKey.key
 const amp = '&'
 const steamIdQp = 'steamid=76561198051865267'
 const format = 'format=json'
