@@ -1,7 +1,7 @@
 <template>
   <div>
     <p>{{this.name}}</p>
-    <img :src="this.fullUrlLogo()">
+    <img :src="this.fullUrlLogo">
   </div>
 </template>
 
@@ -21,7 +21,7 @@ export default {
   },
 
   computed:{
-    fullUrlLogo: function(){
+    fullUrlLogo(){
       return "http://media.steampowered.com/steamcommunity/public/images/apps/"+this.appid.toString()+"/"+this.logoUrl+".jpg"
     }
   },

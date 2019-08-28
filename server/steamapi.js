@@ -8,11 +8,12 @@ const version = '/v0001'
 const quesMark = '?'
 const keyQp = 'key='+mySteamKey.key
 const amp = '&'
-const steamIdQp = 'steamid=76561198051865267'
+//const steamIdQp = 'steamid=76561198051865267'
+const steamIdQp = 'steamid='
 const format = 'format=json'
 const allInfo = 'include_appinfo=true'
 
-getOwnedGames = function () {
+getOwnedGames = function (aSteamID) {
     return axios
         .get(steamAPIUrl + 
             playerServiceAPI + 
@@ -21,7 +22,7 @@ getOwnedGames = function () {
             quesMark + 
             keyQp + 
             amp + 
-            steamIdQp + 
+            steamIdQp + aSteamID +
             amp + 
             format + 
             amp + 

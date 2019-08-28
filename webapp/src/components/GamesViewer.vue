@@ -1,5 +1,13 @@
 <template>
-<ul>
+<div>
+  <div>
+    <p>Steam ID: </p>
+    <input 
+      v-model="steamID" 
+      placeholder="write here your steam id..."
+      @blur="search()" />
+  </div>
+  <ul>
   <li 
     v-for="(game,index) in this.gamesList"
     :key=index>
@@ -10,6 +18,7 @@
       />
   </li>
 </ul>
+</div>
 </template>
 
 <script>
@@ -25,17 +34,30 @@ export default {
 
   data(){
     return{
-      gamesList: []
+      gamesList: [],
+      steamID: ''
     }
   },
 
   created() {
-    axios
-      .get("http://localhost:4000/steam-view-api/get-owned-games")
-      .then(resp => { 
-            this.gamesList = resp.data.message.response.games
-          }
-        );
+  },
+
+  methods: {
+    search(){
+
+    if(! this.steamID.trim())
+      return
+
+      axios
+        .post("http://localhost:4000/steam-view-api/get-owned-games",{steamID: this.steamID})
+        .then(resp => {
+              if(resp.data.message.name === 'Error')
+                return
+
+              this.gamesList = resp.data.message.response.games
+            }
+          );
+    }
   }
 };
 </script>
