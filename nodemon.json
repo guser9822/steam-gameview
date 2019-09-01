@@ -1,0 +1,7 @@
+{
+    "exec": "npm run serve:backend",
+    "watch": [
+        "server/*"
+    ],
+    "ext": "js, html, css, json"
+}

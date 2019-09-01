@@ -1,18 +1,18 @@
-const axios = require('axios')
-const mySteamKey = require('./mySteamKey').mySteamKey
+import axios from 'axios'
+import STEAM_KEY from './mySteamKey'
 
 const steamAPIUrl = 'http://api.steampowered.com/'
 const playerServiceAPI = '/IPlayerService'
 const getOwnedGamesEndPoint = '/GetOwnedGames'
 const version = '/v0001'
 const quesMark = '?'
-const keyQp = 'key=' + mySteamKey.key
+const keyQp = 'key=' + STEAM_KEY
 const amp = '&'
 const steamIdQp = 'steamid='
 const format = 'format=json'
 const allInfo = 'include_appinfo=true'
 
-getOwnedGames = function (aSteamID) {
+const getOwnedGames = function (aSteamID) {
     return axios
         .get(steamAPIUrl +
             playerServiceAPI +
@@ -29,8 +29,8 @@ getOwnedGames = function (aSteamID) {
         .then(res => { console.log(res); return res; })
 }
 
-const steamAPIWrapper = {
+const SteamAPIWrapper = {
     getOwnedGames: getOwnedGames
 }
 
-module.exports.steamAPIWrapper = steamAPIWrapper
+export default SteamAPIWrapper

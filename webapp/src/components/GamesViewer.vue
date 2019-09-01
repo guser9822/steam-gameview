@@ -12,7 +12,7 @@
       </ul>
     </div>
     <div v-else>
-      <p>Games list empty {{ example}}</p>
+      <p>Games list empty </p>
     </div>
   </div>
 </template>
@@ -44,7 +44,7 @@ export default {
       if (!this.steamID.trim()) return;
 
       axios
-        .post("http://localhost:4000/steam-view-api/get-owned-games", {
+        .post("http://localhost:4000"+mainPathAPI+viewerPOSTS.ownedGames, {
           steamID: this.steamID
         })
         .then(resp => {
@@ -59,9 +59,6 @@ export default {
   },
 
   computed: {
-    example() {
-      console.log("OBJ : " + mainPathAPI);
-    }
   }
 };
 </script>

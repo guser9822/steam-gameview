@@ -1,23 +1,21 @@
-import PTP from '../server/viewer-naming-api'
+import SteamAPIWrapper from "./steamapi";
+import ViewerNamingAPI from "./viewer-naming-api";
+import express from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
 
-const express = require('express');
-const cors = require('cors');
-const morgan = require('morgan');
-var bodyParser = require('body-parser');
+const { mainPathAPI, viewerPOSTS } = ViewerNamingAPI;
+
 const app = express();
-const steamAPIWrapper = require('../server/steamapi').steamAPIWrapper
-//const { mainPathAPI, viewerPOSTS } = require('../server/viewer-naming-api').viewerNamingAPI
-
-console.log("MEX "+PTP)
-
 app.use(morgan('tiny'));
 app.use(cors());
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-/* app.post(mainPathAPI + viewerPOSTS.ownedGames, (req, res) => {
+app.post(mainPathAPI + viewerPOSTS.ownedGames, (req, res) => {
     var steamID = req.body.steamID
-    steamAPIWrapper.getOwnedGames(steamID).
+    SteamAPIWrapper.getOwnedGames(steamID).
         then(steamRes => {
             res.json({
                 message: steamRes.data
@@ -30,9 +28,9 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
             });
         })
 });
- */
-const viewerAPI = {
+
+const ViewerAPI = {
     viewerAPP: app
 }
 
-module.exports.viewerAPI = viewerAPI
+export default ViewerAPI
