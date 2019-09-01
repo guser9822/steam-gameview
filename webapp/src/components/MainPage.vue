@@ -2,7 +2,7 @@
   <GamesViewer />
 </template>
 
-<script>
+	<script>
 import GamesViewer from "./GamesViewer";
 
 export default {
@@ -15,7 +15,6 @@ export default {
   created() {}
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+	<!-- Add "scoped" attribute to limit CSS to this component only -->
+	<style scoped>
 </style>

@@ -1,13 +1,12 @@
 <template>
   <div>
     <p>{{this.name}}</p>
-    <img :src="this.fullUrlLogo">
+    <img :src="this.fullUrlLogo" />
   </div>
 </template>
 
 <script>
 export default {
-
   props: {
     name: {
       type: String
@@ -20,12 +19,17 @@ export default {
     }
   },
 
-  computed:{
-    fullUrlLogo(){
-      return "http://media.steampowered.com/steamcommunity/public/images/apps/"+this.appid.toString()+"/"+this.logoUrl+".jpg"
+  computed: {
+    fullUrlLogo() {
+      return (
+        "http://media.steampowered.com/steamcommunity/public/images/apps/" +
+        this.appid.toString() +
+        "/" +
+        this.logoUrl +
+        ".jpg"
+      );
     }
-  },
-
+  }
 };
 </script>
 
