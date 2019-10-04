@@ -23,13 +23,14 @@
 
         computed: {
             fullUrlLogo() {
-                const {appId,logoUrl} = this
-                return ! appId && ! logoUrl ? '' :
-                    "http://media.steampowered.com/steamcommunity/public/images/apps/" +
-                    this.appid.toString() +
-                    "/" +
-                    this.logoUrl +
-                    ".jpg";
+                const { appId, logoUrl } = this;
+                return !appId && !logoUrl
+                    ? ""
+                    : "http://media.steampowered.com/steamcommunity/public/images/apps/" +
+                          this.appid.toString() +
+                          "/" +
+                          this.logoUrl +
+                          ".jpg";
             }
         }
     };
@@ -39,19 +40,18 @@
     .Game {
         color: white;
         margin: 10px;
-        border: 2px outset whitesmoke;
+        border: 2px outset orange;
         border-radius: 20px;
         display: flex;
         flex-direction: column;
-        width:350px;
+        width: 350px;
     }
 
     .Game:hover {
         transform: translate(0, -15px);
     }
 
-    .Game-Body{
+    .Game-Body {
         padding: 10px;
     }
-
 </style>
