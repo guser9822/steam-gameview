@@ -23,13 +23,13 @@
 
         computed: {
             fullUrlLogo() {
-                return (
+                const {appId,logoUrl} = this
+                return ! appId && ! logoUrl ? '' :
                     "http://media.steampowered.com/steamcommunity/public/images/apps/" +
                     this.appid.toString() +
                     "/" +
                     this.logoUrl +
-                    ".jpg"
-                );
+                    ".jpg";
             }
         }
     };
@@ -44,7 +44,6 @@
         display: flex;
         flex-direction: column;
         width:350px;
-        
     }
 
     .Game:hover {
