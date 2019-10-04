@@ -26,7 +26,7 @@ const getOwnedGames = function (aSteamID) {
             format +
             amp +
             allInfo)
-        .then(res => { console.log(res); return res; })
+        .then(res => {  console.log(res); return res; })
 }
 
 const SteamAPIWrapper = {
