@@ -6,7 +6,7 @@
 
 <script>
     import MainPage from "./components/MainPage.vue";
-    import Worker from "./file.worker";
+    import Worker from "./util/file.worker";
 
     export default {
         name: "app",
