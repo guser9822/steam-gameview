@@ -1,4 +1,3 @@
-onmessage = e => {
-    const message = e.data;
-    console.log(`[From Main]: ${message}`);
-  };
+self.addEventListener('message', function (e) {
+    self.postMessage(e.data+' updated eight');
+}, false);
