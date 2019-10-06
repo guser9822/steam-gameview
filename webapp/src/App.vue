@@ -12,24 +12,25 @@
         name: "app",
 
         mounted() {
-            const worker = new Worker();
 
-            worker.addEventListener(
-                "message",
-                function(e) {
-                    console.log("Worker said: ", e.data);
-                },
-                false
-            );
+            const worker = new Worker("file.worker.js");
 
-            worker.postMessage("First message");
+            worker.onmessage = event => {
+                console.log("Worker said: ", event.data);
+            };
+
+            worker.postMessage("Execute heavy task");
         },
 
         components: {
             MainPage
         },
 
-        methods: {}
+        methods: {
+            heavyTask() {
+                console.log("Heavy task");
+            }
+        }
     };
 </script>
 

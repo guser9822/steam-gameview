@@ -10,7 +10,7 @@
 
         components: {
             Game,
-            Loader,
+            Loader
         },
 
         data() {
@@ -54,7 +54,7 @@
 
 <template>
     <div>
-        <Loader v-show="showLoader"/>
+        <Loader v-show="showLoader" />
         <div class="GamesViewer-InputBlock">
             <p class="GamesViewer-InputBlock-Paragraph">Steam ID:</p>
             <input v-model="steamID" placeholder="write here your steam id..." @blur="search()" />
@@ -79,7 +79,7 @@
         margin-bottom: 80px;
     }
 
-    .GamesViewer-InputBlock-Paragraph{
+    .GamesViewer-InputBlock-Paragraph {
         color: white;
     }
 
