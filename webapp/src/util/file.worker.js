@@ -1,19 +1,20 @@
 onmessage = event => {
-    console.log("App said : ", event.data)
-    heavyTask()
-    postMessage('heavy task executed');
+    fetchGames(event.data)
 }
 
 onerror = event => {
     console.error(event.message)
 }
 
-
-function heavyTask() {
-    console.log('HeavyTask')
-    fetch('https://jsonplaceholder.typicode.com/posts/1/comments')
-        .then(response => {
-            console.log('Response : ', response.json())
-        })
+function fetchGames(data) {
+    fetch(data.url, {
+        method: 'post',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(r => r.json().then(data => ({ status: r.status, body: data })))
+        .then(obj => { postMessage(obj); })
         .catch(err => console.error(err));
 }

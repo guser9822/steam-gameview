@@ -3,7 +3,9 @@
     import Loader from "./widget/Loader";
     import axios from "axios";
     import ViewerNamingAPI from "../../../server/viewer-naming-api";
+    import Worker from "../util/file.worker";
     const { mainPathAPI, viewerPOSTS } = ViewerNamingAPI;
+    let worker = new Worker("file.worker.js");
 
     export default {
         props: {},
@@ -21,30 +23,37 @@
             };
         },
 
+        mounted() {
+            worker.onmessage = event => {
+                console.log("Worker said: ", event.data);
+                this.showLoader = false;
+                if (!event.data.body.message.response) {
+                    this.gamesList = [];
+                    return;
+                }
+                this.gamesList = event.data.body.message.response.games;
+            };
+        },
+
         created() {},
 
         methods: {
             search() {
-                if (!this.steamID.trim()) return;
+                if (!this.steamID.trim()) {
+                    return;
+                }
+
+                this.gamesList = [];
+
                 this.showLoader = true;
-                axios
-                    .post(
+                worker.postMessage({
+                    url:
                         "http://localhost:4000" +
-                            mainPathAPI +
-                            viewerPOSTS.ownedGames,
-                        {
-                            steamID: this.steamID
-                        }
-                    )
-                    .then(resp => {
-                        if (resp.data.message.name === "Error") {
-                            this.gamesList = [];
-                            this.showLoader = false;
-                            return;
-                        }
-                        this.showLoader = false;
-                        this.gamesList = resp.data.message.response.games;
-                    });
+                        mainPathAPI +
+                        viewerPOSTS.ownedGames,
+                    steamID: this.steamID
+                });
+
             }
         },
 

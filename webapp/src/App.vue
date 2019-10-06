@@ -6,31 +6,12 @@
 
 <script>
     import MainPage from "./components/MainPage.vue";
-    import Worker from "./util/file.worker";
 
     export default {
         name: "app",
-
-        mounted() {
-
-            const worker = new Worker("file.worker.js");
-
-            worker.onmessage = event => {
-                console.log("Worker said: ", event.data);
-            };
-
-            worker.postMessage("Execute heavy task");
-        },
-
         components: {
             MainPage
         },
-
-        methods: {
-            heavyTask() {
-                console.log("Heavy task");
-            }
-        }
     };
 </script>
 
