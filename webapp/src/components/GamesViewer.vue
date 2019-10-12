@@ -3,16 +3,15 @@
     import Loader from "./widget/Loader";
     import axios from "axios";
     import ViewerNamingAPI from "../../../server/viewer-naming-api";
-    import Worker from "../util/file.worker";
+    import GamesViewerWorker  from './util/games-viewer-winterface'
     const { mainPathAPI, viewerPOSTS } = ViewerNamingAPI;
-    let worker = new Worker("file.worker.js");
 
     export default {
         props: {},
 
         components: {
             Game,
-            Loader
+            Loader,
         },
 
         data() {
@@ -24,8 +23,7 @@
         },
 
         mounted() {
-            worker.onmessage = event => {
-                console.log("Worker said: ", event.data);
+            GamesViewerWorker.onmessage = event => {
                 this.showLoader = false;
                 if (!event.data.body.message.response) {
                     this.gamesList = [];
@@ -46,7 +44,7 @@
                 this.gamesList = [];
 
                 this.showLoader = true;
-                worker.postMessage({
+                GamesViewerWorker.postMessage({
                     url:
                         "http://localhost:4000" +
                         mainPathAPI +
