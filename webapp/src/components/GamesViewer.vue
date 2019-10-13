@@ -3,7 +3,7 @@
     import Loader from "./widget/Loader";
     import axios from "axios";
     import ViewerNamingAPI from "../../../server/viewer-naming-api";
-    import GamesViewerWorker  from './util/games-viewer-winterface'
+    import WorkerLoader from "./widget/Worker-Loader";
     const { mainPathAPI, viewerPOSTS } = ViewerNamingAPI;
 
     export default {
@@ -12,28 +12,16 @@
         components: {
             Game,
             Loader,
+            WorkerLoader,
         },
 
         data() {
             return {
                 gamesList: [],
                 steamID: "",
-                showLoader: false
+                showLoader: false,
             };
         },
-
-        mounted() {
-            GamesViewerWorker.onmessage = event => {
-                this.showLoader = false;
-                if (!event.data.body.message.response) {
-                    this.gamesList = [];
-                    return;
-                }
-                this.gamesList = event.data.body.message.response.games;
-            };
-        },
-
-        created() {},
 
         methods: {
             search() {
@@ -44,18 +32,34 @@
                 this.gamesList = [];
 
                 this.showLoader = true;
-                GamesViewerWorker.postMessage({
+            },
+
+            onMessageHandler(event) {
+                this.showLoader = false;
+                if (!event.data.body.message.response) {
+                    this.gamesList = [];
+                    return;
+                }
+                this.gamesList = event.data.body.message.response.games;
+            }
+        },
+
+        computed: {
+            postMessage() {
+                if (!this.showLoader) {
+                    return { request: this.showLoader}
+                }
+                const request = {
+                    request: this.showLoader,
                     url:
                         "http://localhost:4000" +
                         mainPathAPI +
                         viewerPOSTS.ownedGames,
                     steamID: this.steamID
-                });
-
+                };
+                return request
             }
-        },
-
-        computed: {}
+        }
     };
 </script>
 
@@ -66,18 +70,21 @@
             <p class="GamesViewer-InputBlock-Paragraph">Steam ID:</p>
             <input v-model="steamID" placeholder="write here your steam id..." @blur="search()" />
         </div>
-        <div class="GamesViewer-GamesList" v-if="gamesList && gamesList.length > 0">
-            <div v-for="(game,index) in this.gamesList" :key="index">
-                <Game
-                    :name="game.name"
-                    :logoUrl="game.img_logo_url"
-                    :appid="game.appid.toString()"
-                />
+
+        <WorkerLoader :workerOnMessage="onMessageHandler" :workerPostMessage="postMessage">
+            <div class="GamesViewer-GamesList" v-if="gamesList && gamesList.length > 0">
+                <div v-for="(game,index) in this.gamesList" :key="index">
+                    <Game
+                        :name="game.name"
+                        :logoUrl="game.img_logo_url"
+                        :appid="game.appid.toString()"
+                    />
+                </div>
             </div>
-        </div>
-        <div v-else>
-            <p class="GamesViewer-InputBlock-Paragraph">Games list empty</p>
-        </div>
+            <div v-else>
+                <p class="GamesViewer-InputBlock-Paragraph">Games list empty</p>
+            </div>
+        </WorkerLoader>
     </div>
 </template>
 
